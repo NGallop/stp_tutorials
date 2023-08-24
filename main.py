@@ -41,9 +41,8 @@ def main():
     # initialise mold sequence by passing the raw sequence in
     mould_obj = mld.mould_sequence(sequence)
     # using mol_sequence, return a corrected standard sequence format
-    corrected_seq = mould_obj.seq_mould() #add seq_errors
-    # print non-conformities and corrective actions to the terminal
-    #print(seq_errors)
+    corrected_seq = mould_obj.seq_mould() 
+
 
     # initialise exercise 2 object
     ex2_obj = ex2.exercise_2(corrected_seq)
