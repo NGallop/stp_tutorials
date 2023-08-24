@@ -14,7 +14,16 @@ class exercise_2():
     # 2.1: convert fasta DNA base string to GenBank records style. 
     # e.g. "ACTGACTGACTGACTGACTG" > '1 actgactgac tgactgactg actgactgac'
     def genbank_convert(self):
-        return
+        seq = self.sequence
+        seq = seq.lower()
+        seq_list = []
+        x = 1
+        while x > 0:
+            seq_list.append(seq[:10])
+            seq = seq[10:]
+            x = len(seq)
+
+        return seq_list
     
     # 2.2: translate DNA sequence to amino acid sequence
     # e.g. aggagtaag > RSK, or AGGAGTAAG > RSK

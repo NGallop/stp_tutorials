@@ -54,6 +54,7 @@ def main():
     # perform desired operations
     if args.genbank_format == True:
         genbank_format = ex2_obj.genbank_convert()
+        print(genbank_format)
     if args.protein == True:
         amino_acids = ex2_obj.DNA_to_protein()
         print(amino_acids)
