@@ -44,6 +44,22 @@ class mould_sequence():
             print('ERROR: sequence contains non-base characters. Cannot process.')
             quit()
         return in_seq
+    
+    # trim bases indivisible by 3
+    def __codon_trim(self, in_seq):
+        if (len(in_seq) % 3 == 0):
+            out_seq = in_seq
+        elif (len(in_seq) % 3 == 1):
+            trimmed_base = in_seq[-1]
+            out_seq = in_seq[:-1]
+            print("WARNING: sequence not divisible by three (remainder = 1). Removed base(s): ", trimmed_base)
+            pass
+        elif (len(in_seq) % 3 == 2):
+            trimmed_base = in_seq[-2:]
+            out_seq = in_seq[:-2]
+            print("WARNING: sequence not divisible by three (remainder = 2). Removed base(s): ", trimmed_base)
+            pass
+        return out_seq
 
     # accept any sequence and mold into format ACGTACGTACGT
     def seq_mould(self):
@@ -51,4 +67,5 @@ class mould_sequence():
         seq = self.__caps_char(seq)
         seq = self.__remove_numbers(seq)
         seq = self.__character_check(seq)
+        seq = self.__codon_trim(seq)
         return seq
