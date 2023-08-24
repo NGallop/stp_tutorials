@@ -11,29 +11,28 @@ class mould_sequence():
     def __init__(self, incoming_sequence):
         self.input_sequence = incoming_sequence
 
-    def __remove_whitespace(str):
-        seq = " ".join(str.splitlines())
+    def __remove_whitespace(self):
+        seq = " ".join(self.input_sequence.splitlines())
         seq = seq.replace(" ", "")
         return seq
 
-    def __remove_numbers(str):
-        return
-
-    def __character_check(str):
+    def __character_check(self, no_wsno_seq):
         accepted_chars = set('ATCGatcg')
         expected_char = set('Nn')
         return
 
     # accept any sequence and mold into format ACGTACGTACGT
     def seq_mould(self):
-        seq = self.input_sequence
-        seq = self.__remove_whitespace(seq)
-        seq = self.__remove_numbers(seq)
-        seq = self.__character_check(seq)
+        seq = self.__remove_whitespace()
+        #seq = self.__character_check(seq)
         return seq
 
 def main():
-    return
+    sequence = open('ref/sequence_ws.txt', 'r')
+    sequence = sequence.read()
+    mould_obj = mould_sequence(sequence)
+    corrected_seq = mould_obj.seq_mould()
+    print(corrected_seq)
 
 if __name__ == '__main__':
     main()
