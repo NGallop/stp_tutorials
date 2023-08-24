@@ -6,6 +6,8 @@
 ###############################################################################
 
 import argparse
+import json
+import pandas as pd
 import src.exercise_2 as ex2
 import src.mould_sequence as mld
 
@@ -43,22 +45,30 @@ def main():
     # using mol_sequence, return a corrected standard sequence format
     corrected_seq = mould_obj.seq_mould() 
 
-
+    # hardcoded codon table
+    with open ('ref/codon.json', 'r') as f:
+        codon_json = json.load(f)
+    
     # initialise exercise 2 object
-    ex2_obj = ex2.exercise_2(corrected_seq)
+    ex2_obj = ex2.exercise_2(corrected_seq, codon_json)
     # perform desired operations
     if args.genbank_format == True:
         genbank_format = ex2_obj.genbank_convert()
     if args.protein == True:
         amino_acids = ex2_obj.DNA_to_protein()
+        print(amino_acids)
     if args.reverse_complement == True:
         reverse = ex2_obj.reverse_seq()
+        print('Forward:\n', corrected_seq)
+        print('Reverse:\n', reverse)
     if args.reading_frames == True:
         six_frame = ex2_obj.sixFrame_translate()
     if args.base_counting == True:
         base_counts = ex2_obj.count_bases()
+        print("base counts: ", base_counts)
     if args.gc_content == True:
         gc_content = ex2_obj.gc_content()
+        print("GC-content is: ", gc_content, "%")
     # add if no arguments selected consequence here
 
 if __name__ == '__main__':
