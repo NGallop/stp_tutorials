@@ -94,7 +94,46 @@ class exercise_2():
     # 2.4 generate a six-frame translation of a sequence
     # e.g. Forward: RSK, GVS, E*A; Reverse: LTP, GLL, AYS
     def sixFrame_translate(self):
-        return
+        seq = self.sequence
+        f1 = self.__DNA_to_protein_arg(seq)
+        f2 = self.__DNA_to_protein_arg(seq[1:-2])
+        f3 = self.__DNA_to_protein_arg(seq[2:-1])
+        rev_seq = self.__reverse_seq_arg(seq)
+        r1 = self.__DNA_to_protein_arg(rev_seq)
+        r2 = self.__DNA_to_protein_arg(rev_seq[1:-2])
+        r3 = self.__DNA_to_protein_arg(rev_seq[2:-1])
+
+        six_frame_dict = {'Forward': {'1': f1, '2': f2, '3': f3}, 'Reverse': {'1': r1, '2': r2, '3': r3}}
+
+        return six_frame_dict
+    
+    def __DNA_to_protein_arg(self, in_sequence):
+        amino_list = []
+        seq = in_sequence
+        n = range(len(seq))
+        for i in n[::3]:
+            x = seq[i:][:3]
+            aa = self.codon_table[x]
+            amino_list.append(aa)
+        amino_acid_sequence = "".join(amino_list)
+        return amino_acid_sequence
+    
+    def __reverse_seq_arg(self, in_sequence):
+        seq = in_sequence
+        seqOut = ""
+        for base in seq:
+            if base == "A":
+                outbase = "T"
+            elif base == "T":
+                outbase = "A"
+            elif base == "C":
+                outbase = "G"
+            elif base == "G":
+                outbase = "C"
+            else:
+                outbase = base
+            seqOut=outbase+seqOut
+        return seqOut
     
     # 2.5 count mono-, di- and tri-nucleotides in a sequence
     # e.g. a 12, g 9, t 7... ag 1, ga 1, gt 2, aa 3... acg 1, att 1, agt 1...

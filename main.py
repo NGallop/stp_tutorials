@@ -64,6 +64,7 @@ def main():
         print('Reverse:\n', reverse)
     if args.reading_frames == True:
         six_frame = ex2_obj.sixFrame_translate()
+        print(six_frame)
     if args.base_counting == True:
         base_counts = ex2_obj.count_bases()
         print("base counts: ", base_counts)
