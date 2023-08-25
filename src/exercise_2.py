@@ -15,15 +15,48 @@ class exercise_2():
     # e.g. "ACTGACTGACTGACTGACTG" > '1 actgactgac tgactgactg actgactgac'
     def genbank_convert(self):
         seq = self.sequence
+        ## make all bases lower case
         seq = seq.lower()
-        seq_list = []
+        ## initialise list to append base-blocks to
+        seq_list = ["cut", 1]
+
+        ## if seq is indivisible by 10, remove the remainder bases from seq and put in variable for later
+        remaining_sequence=[]
+        if (len(seq)%10 != 0):
+            remainder = (len(seq)%10)
+            remaining_sequence = [seq[-remainder:],]
+            seq = seq[:-remainder]
+
+        ## separate sequence into blocks of 10 and append to a list
         x = 1
+        counter = 1
         while x > 0:
             seq_list.append(seq[:10])
+            # insert a breakpoint and counting integer after every 6 blocks
+            if (len(seq_list)%8 ==0):
+                counter += 60
+                seq_list.append("cut")
+                seq_list.append(counter)
+            # remove those bases from original sequence and continue
             seq = seq[10:]
+            # when x hits zero (i.e. when sequence has been wholly converted to a list), 'while' statement closes
             x = len(seq)
 
-        return seq_list
+        ## create genbank format from list
+        # if there was a remainder to add, append this remainder to the list now
+        if len(remaining_sequence) == 1:
+            seq_list.append(remaining_sequence[0])
+        # if the last item of the list is an integer (i.e. the sequence was divisible by 60), remove this integer and the preceding breakpoint
+        if type(seq_list[-1]) is int:
+            seq_list = seq_list[:-2]
+        # remove the initialising breakpoint
+        seq_list = seq_list[1:]
+        # convert list to string, with spaces to separate
+        seq_string = " ".join(str(item) for item in seq_list)
+        # replace breakpoint indicators ('cut') with line breaks
+        seq_string = seq_string.replace("cut ", "\n")
+
+        return seq_string
     
     # 2.2: translate DNA sequence to amino acid sequence
     # e.g. aggagtaag > RSK, or AGGAGTAAG > RSK
