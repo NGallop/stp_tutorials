@@ -35,7 +35,7 @@ def main():
         with open ('ref/codon.json', 'r') as f:
             codon_json = json.load(f)
     except FileNotFoundError:
-        print("Warning: could not load codon table. Codon table must be located at ref/codon.json")
+        print("Warning: could not load codon table. Codon table must be located at ref/codon.json. \n")
         codon_json = {}
         quitter = 1
 
@@ -49,31 +49,29 @@ def main():
     # perform desired operations
     if selected_args[0] == True:
         genbank_format = ex2_obj.genbank_convert()
-        print(genbank_format)
+        print("Genbank format: \n", genbank_format, "\n")
     if selected_args[1] == True:
         if quitter > 0:
-            print('ERROR: Codon table required for function. Program aborted.')
-            quit()
+            print('ERROR: Codon table required for function. \n')
         else:
             amino_acids = ex2_obj.DNA_to_protein()
-            print(amino_acids)
+            print("Translation: \n", amino_acids, "\n")
     if selected_args[2] == True:
         reverse = ex2_obj.reverse_seq()
-        print('Forward:\n', corrected_seq)
-        print('Reverse:\n', reverse)
+        print('Forward (original):\n', corrected_seq)
+        print('Reverse:\n', reverse, "\n")
     if selected_args[3] == True:
         if quitter > 0:
-            print('ERROR: Codon table required for function. Program aborted.')
-            quit()
+            print('ERROR: Codon table required for function. Program aborted. \n')
         else:
             six_frame = ex2_obj.sixFrame_translate()
-            print(six_frame)
+            print("Six-frame translation dictionary: \n", six_frame, "\n")
     if selected_args[4] == True:
         base_counts = ex2_obj.count_bases()
-        print("base counts: ", base_counts)
+        print("base counts: ", base_counts, "\n")
     if selected_args[5] == True:
         gc_content = ex2_obj.gc_content()
-        print("GC-content is: ", gc_content, "%")
+        print("GC-content is: ", gc_content, "% \n")
 
 
 if __name__ == '__main__':
