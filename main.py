@@ -5,39 +5,20 @@
 # Purpose: Handle exercise 2 objects                                          #
 ###############################################################################
 
-import argparse
 import json
-import pandas as pd
+import sys
 import src.exercise_2 as ex2
 import src.mould_sequence as mld
+import src.cli as cli
 
 def main():
-    # outline argparse arguments
-    parser = argparse.ArgumentParser(description='')
-    parser.add_argument(
-        '-i', '--input', required = True, help='Input file')
-    parser.add_argument(
-        '-f', '--genbank_format', action='store_true',
-        help='Reformat the sequence in gebank format')
-    parser.add_argument(
-        '-p', '--protein', action='store_true',
-          help='Translate DNA sequence to amino acid sequence')
-    parser.add_argument(
-        '-c', '--reverse_complement', action='store_true',
-          help='Convert sequence to the reverse complement')
-    parser.add_argument(
-        '-r', '--reading_frames', action='store_true',
-          help='Return all 6 reading frames for a given sequence')
-    parser.add_argument(
-        '-b', '--base_counting', action='store_true',
-          help='Count all mono-, di-, and tri-nucleotide instances in a seq.')
-    parser.add_argument(
-        '-g', '--gc_content', action='store_true',
-          help='Return the GC-content of a given sequence as a percentage')
-    args = parser.parse_args()
+
+    # initialise cli object
+    cli_obj = cli.cli_obj(sys.argv[1:])
+    selected_args = cli_obj.arg_selection()
 
     # open and read the txt file containing sequence
-    sequence = open(args.input, 'r')
+    sequence = open(cli_obj.args.input, 'r')
     sequence = sequence.read()
 
     # initialise mold sequence by passing the raw sequence in
@@ -52,23 +33,23 @@ def main():
     # initialise exercise 2 object
     ex2_obj = ex2.exercise_2(corrected_seq, codon_json)
     # perform desired operations
-    if args.genbank_format == True:
+    if selected_args[0] == True:
         genbank_format = ex2_obj.genbank_convert()
         print(genbank_format)
-    if args.protein == True:
+    if selected_args[1]== True:
         amino_acids = ex2_obj.DNA_to_protein()
         print(amino_acids)
-    if args.reverse_complement == True:
+    if selected_args[2] == True:
         reverse = ex2_obj.reverse_seq()
         print('Forward:\n', corrected_seq)
         print('Reverse:\n', reverse)
-    if args.reading_frames == True:
+    if selected_args[3] == True:
         six_frame = ex2_obj.sixFrame_translate()
         print(six_frame)
-    if args.base_counting == True:
+    if selected_args[4] == True:
         base_counts = ex2_obj.count_bases()
         print("base counts: ", base_counts)
-    if args.gc_content == True:
+    if selected_args[5] == True:
         gc_content = ex2_obj.gc_content()
         print("GC-content is: ", gc_content, "%")
     # add if no arguments selected consequence here
