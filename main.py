@@ -16,6 +16,9 @@ def main():
     # initialise cli object
     cli_obj = cli.cli_obj(sys.argv[1:])
     selected_args = cli_obj.arg_selection()
+    if selected_args == [False, False, False, False, False, False]:
+        print("No arguments selected, aborting program")
+        quit()
 
     # open and read the txt file containing sequence
     sequence = open(cli_obj.args.input, 'r')
@@ -52,7 +55,7 @@ def main():
     if selected_args[5] == True:
         gc_content = ex2_obj.gc_content()
         print("GC-content is: ", gc_content, "%")
-    # add if no arguments selected consequence here
+
 
 if __name__ == '__main__':
     main()
