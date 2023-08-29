@@ -1,3 +1,10 @@
+###############################################################################
+# Author: Niall Gallop                                                        #
+# Date:                                                                       #
+# Name: cli.py                                                                #
+# Purpose: Object to handle command line interface options                    #
+###############################################################################
+
 import argparse
 
 class cli_obj():
